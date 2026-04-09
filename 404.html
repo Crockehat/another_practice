@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404</title>
+  <style>
+@font-face {
+  font-family: "roboto"; 
+  src: url("fonts/Roboto.ttf") format("opentype"); 
+  font-weight: normal;
+  font-style: normal;
+}
+*{
+  margin: 0;
+}
+
+    body{
+        background-color: #465940;
+        background-image: url(img/patern.svg);
+        background-size: cover;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    p{
+      color: #fdfbf0;
+      font-family: "roboto", sans-serif !important;
+    }
+    .er{
+      margin-top: 100px;
+      font-size: 150pt;
+    }
+    .description{
+      font-size: 34pt;
+    }
+    .joke{
+      font-size: 24pt;
+      opacity: 0.5;
+    }
+    img{
+      margin-top: -200px;
+    }
+  </style>
+<style>
+  @media (max-width: 768px) {
+    body {
+      text-align: center;
+      padding: 20px;
+    }
+    .er {
+      font-size: 80pt;
+      margin-top: 50px;
+    }
+    .description {
+      font-size: 24pt;
+    }
+    .joke {
+      font-size: 18pt;
+    }
+    img {
+      margin-top: 0px;
+      width: 80%;
+      max-width: 300px;
+    }
+  }
+  @media (max-width: 480px) {
+    .er {
+      font-size: 50pt;
+    }
+    .description {
+      font-size: 18pt;
+    }
+    .joke {
+      font-size: 14pt;
+    }
+  }
+</style>
+</head>
+<body>
+  <p class="er">404</p>
+  <p class="description">старница не найдена</p>
+  <p class="joke">чаепитие окончено...</p>
+  <img src="img/сломано.png" alt="">
+</body>
+</html>

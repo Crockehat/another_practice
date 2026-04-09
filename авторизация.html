@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>Добро пожаловать | Регистрация и вход</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, "Segoe UI", "Inter", sans-serif; }
+      .btn-footer { width: 150px; background-color: #465940; border: none; color: #fdfbf0; border-radius: 60px; padding: 0.8rem 1.5rem; font-weight: 600; transition: all 0.3s; box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.5); }
+      .btn-footer:hover { transform: translateY(-2px); background-color: #465940 !important; color: #fdfbf0 !important; }
+      .average { display: flex; background-color: #465940; border-radius: 60px; overflow: hidden; box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.5); background-image: url(img/patern.svg); background-size: cover; }
+      .some-box-action { display: flex; gap: 20px; }
+      .orders { min-width: 500px; width: 100%; max-height: 600px; border-radius: 30px; box-shadow: 0px 4px 20px 0px rgba(0,0,0,0.5); display: flex; flex-direction: column; align-items: center; background-color: #fdfbf0; overflow: hidden; }
+      .orders-sign { margin-top: 20px; margin-bottom: 10px; height: 70px; width: 200px; display: flex; justify-content: center; align-items: center; color: #fdfbf0; background-color: #465940; font-size: 21pt; border-radius: 60px; }
+      .orders-list { flex: 1; width: 100%; overflow-y: auto; padding: 15px 20px; }
+      .order-card { background: #f5f5f0; border-radius: 20px; padding: 15px; margin-bottom: 15px; box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.5); }
+      .order-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid #ddd; }
+      .order-date { font-size: 12px; color: #465940; }
+      .order-total { font-weight: bold; color: #465940; font-size: 16px; }
+      .order-status { background-color: #465940; color: #fdfbf0; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; }
+      .order-items { font-size: 13px; color: #465940; }
+      .order-item { padding: 3px 0; }
+      .no-orders { text-align: center; color: #465940; opacity: 0.5; font-size: 16pt; padding: 40px; }
+      body { min-height: 100vh; background-color: #465940; background-image: url(img/patern.svg); background-size: cover; display: flex; align-items: center; justify-content: center; padding: 20px; }
+      .auth-wrapper { min-width: 500px; max-width: 1200px; background-color: #fdfbf0; border-radius: 60px; box-shadow: 0 25px 45px -12px rgba(0,0,0,0.3); overflow: hidden; }
+      .tabs { display: flex; border-bottom: 1px solid #e2e8f0; }
+      .tab-btn { flex: 1; text-align: center; padding: 1.2rem 0.5rem; font-size: 1.2rem; font-weight: 600; background: transparent; border: none; cursor: pointer; color: #465940; }
+      .tab-btn.active { border-bottom: 3px solid #465940; }
+      .form-container { display: flex; flex-direction: column; padding: 2rem 1.8rem 2.2rem; align-items: center; }
+      .auth-form { display: flex; flex-direction: column; gap: 1.5rem; width: 100%; }
+      .hidden-form { display: none; }
+      .input-group { display: flex; flex-direction: column; gap: 0.5rem; }
+      .input-group label { font-weight: 600; font-size: 0.85rem; text-transform: uppercase; color: #465940; }
+      .input-group input { padding: 0.9rem 1rem; font-size: 1rem; border: 1.5px solid #465940; border-radius: 1.2rem; background: white; outline: none; }
+      .input-group input:focus { box-shadow: 0px 3px 4px 0px rgba(0,0,0,0.5); }
+      .action-btn { background: #465940; color: #fdfbf0; border: none; padding: 0.9rem; font-size: 1rem; font-weight: 600; border-radius: 2rem; cursor: pointer; transition: 0.2s; box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.5); width: 200px;}
+      .action-btn:hover { transform: translateY(-2px); }
+      .message { font-size: 0.85rem; padding: 0.7rem 1rem; border-radius: 1rem; text-align: center; margin-top: 0.25rem; }
+      .error-msg { background: #fee2e2; color: #b91c1c; border-left: 4px solid #ef4444; }
+      .success-msg { background: #fdfbf0; color: #465940; border-left: 4px solid #0ea5e9; }
+      .demo-hint { font-size: 0.7rem; text-align: center; color: #465940; margin-top: 1rem; }
+      .admin-link { background: #465940; color: #fdfbf0;  border-radius: 30px; text-decoration: none; display: inline-block; text-align: center;}
+      .form-container button{
+        margin-top: 20px;
+      }
+    </style>
+<style>
+  @media (max-width: 768px) {
+    body {
+      padding: 10px;
+    }
+    .auth-wrapper {
+      min-width: auto;
+      width: 100%;
+      border-radius: 30px;
+    }
+    .some-box-action {
+      flex-direction: column;
+      gap: 20px;
+    }
+    .form-container {
+      width: 100% !important;
+      padding: 1.5rem;
+    }
+    .orders {
+      min-width: auto;
+      width: 100%;
+      max-height: 400px;
+    }
+    .orders-sign {
+      width: 150px;
+      font-size: 16pt;
+      height: 50px;
+    }
+    .order-card {
+      padding: 10px;
+    }
+    .order-header {
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+    .order-date, .order-status {
+      font-size: 10px;
+    }
+    .order-total {
+      font-size: 14px;
+    }
+    .order-item {
+      font-size: 11px;
+    }
+    .action-btn {
+      width: 100%;
+      padding: 0.7rem;
+      font-size: 0.9rem;
+    }
+    .tab-btn {
+      padding: 0.8rem 0.5rem;
+      font-size: 1rem;
+    }
+    .input-group input {
+      padding: 0.7rem;
+      font-size: 0.9rem;
+    }
+  }
+</style>
+  </head>
+  <body>
+    <div class="auth-wrapper" id="appRoot"></div>
+    <script>
+      const STORAGE_USERS_KEY = "auth_app_users";
+      const STORAGE_SESSION_KEY = "auth_app_current_user";
+      const STORAGE_ORDERS_KEY = "auth_app_orders";
+
+      function getUsers() {
+        const raw = localStorage.getItem(STORAGE_USERS_KEY);
+        try { return raw ? JSON.parse(raw) : []; } catch(e) { return []; }
+      }
+      function saveUsers(users) { localStorage.setItem(STORAGE_USERS_KEY, JSON.stringify(users)); }
+      function getUserOrders(email) {
+        if (!email) return [];
+        const raw = localStorage.getItem(`${STORAGE_ORDERS_KEY}_${email}`);
+        try { return raw ? JSON.parse(raw) : []; } catch(e) { return []; }
+      }
+      
+      function registerUser(email, password) {
+        if (!email || !password) return { success: false, message: "Заполните поля" };
+        if (!/^[^\s@]+@([^\s@]+\.)+[^\s@]+$/.test(email)) return { success: false, message: "Введите корректный email (с @)" };
+        if (password.length < 6) return { success: false, message: "Пароль минимум 6 символов" };
+        const users = getUsers();
+        if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) return { success: false, message: "Email уже используется" };
+        users.push({ id: Date.now(), email: email.toLowerCase(), password: password, role: "user", createdAt: new Date().toISOString() });
+        saveUsers(users);
+        return { success: true, message: "Регистрация успешна! Теперь войдите." };
+      }
+      
+      function loginUser(login, password) {
+        if (!login || !password) return { success: false, message: "Введите логин и пароль" };
+        const users = getUsers();
+        const found = users.find(u => u.email === login && u.password === password);
+        if (!found) {
+          return { success: false, message: "Неверный логин или пароль" };
+        }
+        const session = { id: found.id, email: found.email, role: found.role || "user", loggedInAt: new Date().toISOString() };
+        localStorage.setItem(STORAGE_SESSION_KEY, JSON.stringify(session));
+        return { success: true, message: "Вход выполнен!", user: session };
+      }
+      
+      function getCurrentSession() {
+        const raw = localStorage.getItem(STORAGE_SESSION_KEY);
+        try { return raw ? JSON.parse(raw) : null; } catch(e) { return null; }
+      }
+      function logout() { localStorage.removeItem(STORAGE_SESSION_KEY); }
+      
+      function seedUsers() {
+        const users = getUsers();
+        let changed = false;
+        if (!users.some(u => u.email === "admin")) {
+          users.push({ id: "admin1", email: "admin", password: "123456", role: "admin", createdAt: new Date().toISOString() });
+          changed = true;
+        }
+        if (!users.some(u => u.email === "demo@example.com")) {
+          users.push({ id: "demo1", email: "demo@example.com", password: "demo123", role: "user", createdAt: new Date().toISOString() });
+          changed = true;
+        }
+        if (changed) saveUsers(users);
+      }
+      seedUsers();
+
+      let currentActiveTab = "login";
+      const root = document.getElementById("appRoot");
+
+      function showMessage(formType, message, type = "error") {
+        const container = document.getElementById(`msg-${formType}`);
+        if (container) {
+          container.innerHTML = `<div class="message ${type === "error" ? "error-msg" : "success-msg"}">${escapeHtml(message)}</div>`;
+          setTimeout(() => { if (container) container.innerHTML = ""; }, 4000);
+        }
+      }
+      function escapeHtml(str) { return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
+      
+      function renderApp() {
+        const session = getCurrentSession();
+        if (session) {
+          const orders = getUserOrders(session.email);
+          const ordersHtml = orders.length === 0 ? '<div class="no-orders">У вас пока нет заказов</div>' : 
+            `<div class="orders-list" id="ordersListContainer">${orders.slice().reverse().map(order => `
+              <div class="order-card">
+                <div class="order-header"><span class="order-date">${escapeHtml(order.date)}</span><span class="order-status">${escapeHtml(order.status)}</span></div>
+                <div class="order-items">${order.items.map(item => `<div class="order-item">• ${escapeHtml(item.name)} × ${item.quantity} — ${item.price * item.quantity} ₽</div>`).join('')}</div>
+                <div class="order-total" style="margin-top:10px;text-align:right;">Итого: ${order.total} ₽</div>
+              </div>
+            `).join('')}</div>`;
+          const adminButton = session.role === 'admin' ? `<a href="admin.html" class="admin-link action-btn"><i class="fas fa-cog"></i> Админ-панель</a>` : '';
+          root.innerHTML = `
+            <div class="some-box-action">
+              <div class="form-container" style="width: 400px;">
+                <div style="text-align:center;"><h2 style="color:#465940;">Добро пожаловать!</h2><p style="color:#465940;">${escapeHtml(session.email)}</p></div>
+                <div class="input-group" style="align-items:center;">
+                  <div style="border-radius:1.5rem; text-align:center; width:100%; color:#465940;">Вы авторизованы</div>
+                  <button id="logout-action-btn" class="action-btn" style="margin-top:1rem;">Выйти</button>
+                  <a href="index.html" class="action-btn" style="text-align:center; text-decoration:none;">На главную</a>
+                  ${adminButton}
+                </div>
+              </div>
+              <div class="orders">
+                <div class="orders-sign average">Заказы</div>
+                ${ordersHtml}
+              </div>
+            </div>
+          `;
+          document.getElementById("logout-action-btn")?.addEventListener("click", () => { logout(); renderApp(); });
+        } else {
+          const isLoginActive = currentActiveTab === "login";
+          root.innerHTML = `
+            <div class="tabs">
+              <button id="tab-login-btn" class="tab-btn ${isLoginActive ? "active" : ""}">Вход</button>
+              <button id="tab-register-btn" class="tab-btn ${!isLoginActive ? "active" : ""}">Регистрация</button>
+            </div>
+            <div class="form-container">
+              <div id="login-form-block" class="auth-form ${isLoginActive ? "" : "hidden-form"}">
+                <form id="login-form-element">
+                  <div class="input-group"><label>Логин / Email</label><input type="text" id="login-email" placeholder="user@example.com" required></div>
+                  <div class="input-group"><label>Пароль</label><input type="password" id="login-password" placeholder="••••••" required></div>
+                  <button type="submit" class="action-btn">Войти</button>
+                  <div id="msg-login"></div>
+                </form>
+              </div>
+              <div id="register-form-block" class="auth-form ${!isLoginActive ? "" : "hidden-form"}">
+                <form id="register-form-element">
+                  <div class="input-group"><label>Email (для регистрации)</label><input type="email" placeholder="user@example.com" id="reg-email" required></div>
+                  <div class="input-group"><label>Пароль (мин. 6)</label><input type="password" placeholder="••••••" id="reg-password" required></div>
+                  <div class="input-group"><label>Подтверждение</label><input type="password" placeholder="••••••" id="reg-confirm" required></div>
+                  <button type="submit" class="action-btn">Создать аккаунт</button>
+                  <div id="msg-register"></div>
+                </form>
+              </div>
+              
+            </div>
+          `;
+          attachFormHandlers();
+          syncTabsUI();
+        }
+      }
+      
+      function attachFormHandlers() {
+        const loginForm = document.getElementById("login-form-element");
+        if (loginForm) {
+          loginForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const login = document.getElementById("login-email").value.trim();
+            const pwd = document.getElementById("login-password").value;
+            const res = loginUser(login, pwd);
+            if (res.success) {
+              showMessage("login", res.message, "success");
+              const session = getCurrentSession();
+              if (session && session.role === 'admin') window.location.href = 'admin.html';
+              else window.location.href = 'index.html';
+            } else showMessage("login", res.message, "error");
+          });
+        }
+        const regForm = document.getElementById("register-form-element");
+        if (regForm) {
+          regForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const email = document.getElementById("reg-email").value.trim();
+            const pwd = document.getElementById("reg-password").value;
+            const conf = document.getElementById("reg-confirm").value;
+            if (pwd !== conf) { showMessage("register", "Пароли не совпадают", "error"); return; }
+            const res = registerUser(email, pwd);
+            if (res.success) {
+              showMessage("register", res.message, "success");
+              document.getElementById("reg-email").value = "";
+              document.getElementById("reg-password").value = "";
+              document.getElementById("reg-confirm").value = "";
+              setTimeout(() => { if (currentActiveTab !== "login") { currentActiveTab = "login"; renderApp(); } }, 1200);
+            } else showMessage("register", res.message, "error");
+          });
+        }
+        const loginTab = document.getElementById("tab-login-btn");
+        const regTab = document.getElementById("tab-register-btn");
+        if (loginTab) loginTab.onclick = () => { currentActiveTab = "login"; renderApp(); };
+        if (regTab) regTab.onclick = () => { currentActiveTab = "register"; renderApp(); };
+      }
+      
+      function syncTabsUI() {
+        const loginBlock = document.getElementById("login-form-block");
+        const regBlock = document.getElementById("register-form-block");
+        const loginTab = document.getElementById("tab-login-btn");
+        const regTab = document.getElementById("tab-register-btn");
+        if (loginBlock && regBlock) {
+          if (currentActiveTab === "login") {
+            loginBlock.classList.remove("hidden-form");
+            regBlock.classList.add("hidden-form");
+            loginTab?.classList.add("active");
+            regTab?.classList.remove("active");
+          } else {
+            regBlock.classList.remove("hidden-form");
+            loginBlock.classList.add("hidden-form");
+            regTab?.classList.add("active");
+            loginTab?.classList.remove("active");
+          }
+        }
+      }
+      
+      renderApp();
+    </script>
+  </body>
+</html>

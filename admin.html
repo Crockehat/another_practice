@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Админ-панель | Дом кружек</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .admin-container {
+      max-width: 1400px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+    .admin-card {
+      background: #fdfbf0;
+      border-radius: 60px;
+      padding: 30px;
+      box-shadow: 0px 4px 20px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+    .admin-title {
+      color: #465940;
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .form-label {
+      font-weight: 600;
+      color: #465940;
+    }
+    .product-table {
+      background: white;
+      border-radius: 30px;
+      overflow-x: auto;
+    }
+    .product-table table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .product-table th, .product-table td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    .product-table th {
+      background: #465940;
+      color: #fdfbf0;
+    }
+    .delete-product-btn {
+      background: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 5px 12px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .delete-product-btn:hover {
+      transform: scale(1.05);
+    }
+    .btn-admin {
+      background: #465940;
+      color: #fdfbf0;
+      border-radius: 60px;
+      padding: 10px 25px;
+      border: none;
+      transition: 0.3s;
+    }
+    .btn-admin:hover {
+      transform: translateY(-2px);
+      background: #3a4a34;
+    }
+    .btn-danger {
+      background: #dc3545;
+    }
+    .btn-danger:hover {
+      background: #c82333;
+    }
+    .message {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 30px;
+      text-align: center;
+    }
+    .success {
+      background: #d4edda;
+      color: #155724;
+    }
+    .error {
+      background: #f8d7da;
+      color: #721c24;
+    }
+  </style>
+<style>
+  @media (max-width: 768px) {
+    .admin-container {
+      padding: 0 10px;
+      margin: 10px auto;
+    }
+    .admin-card {
+      padding: 15px;
+      border-radius: 30px;
+    }
+    .admin-title {
+      font-size: 20px;
+    }
+    .product-table {
+      overflow-x: auto;
+    }
+    .product-table table {
+      min-width: 600px;
+    }
+    .product-table th, .product-table td {
+      padding: 8px 10px;
+      font-size: 12px;
+    }
+    .delete-product-btn {
+      padding: 4px 8px;
+      font-size: 12px;
+    }
+    .btn-admin {
+      padding: 8px 20px;
+      font-size: 14px;
+    }
+    .form-label {
+      font-size: 14px;
+    }
+    .form-control {
+      font-size: 14px;
+      padding: 6px 10px;
+    }
+    .row {
+      flex-direction: column;
+    }
+    .col-md-6 {
+      width: 100%;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <nav class="navbar mb-4 average">
+    <div class="container-fluid">
+      <a href="index.html" class="navbar-brand h1 mb-0 text-white" style="text-decoration: none;">Дом кружек</a>
+      <div class="d-flex align-items-center gap-3">
+        <div class="nav-buttons" style="cursor: pointer" id="logoutBtn">
+          <div class="nav-buttons-spec">
+            <i class="fa-solid fa-sign-out-alt"></i>
+          </div>
+          <p>Выйти</p>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="admin-container">
+    <div class="admin-card">
+      <h2 class="admin-title"><i class="fas fa-plus-circle me-2"></i>Добавить новый товар</h2>
+      <form id="addProductForm">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Название *</label>
+            <input type="text" class="form-control" id="prodName" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Цена (₽) *</label>
+            <input type="number" class="form-control" id="prodPrice" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Описание</label>
+            <input type="text" class="form-control" id="prodDesc">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Категория *</label>
+            <select class="form-control" id="prodCategory" required>
+              <option value="Кружки">Кружки</option>
+              <option value="Чайный сервиз">Чайный сервиз</option>
+              <option value="Чашки для кофе">Чашки для кофе</option>
+              <option value="Детская посуда">Детская посуда</option>
+              <option value="Наборы">Наборы</option>
+              <option value="Сувенирная посуда">Сувенирная посуда</option>
+              <option value="Термосы">Термосы</option>
+            </select>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Материал</label>
+            <input type="text" class="form-control" id="prodMaterial">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Производитель</label>
+            <input type="text" class="form-control" id="prodManufacturer">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Страна</label>
+            <input type="text" class="form-control" id="prodCountry">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Детали (объем, кол-во предметов и т.д.)</label>
+            <input type="text" class="form-control" id="prodDetails">
+          </div>
+          <div class="col-md-12 mb-3">
+            <label class="form-label">Состав (через запятую)</label>
+            <input type="text" class="form-control" id="prodComposition" placeholder="Например: Фарфор, Ручная роспись">
+          </div>
+          <div class="col-md-12 mb-3">
+            <label class="form-label">URL изображения</label>
+            <input type="text" class="form-control" id="prodImg" placeholder="img/название.jpg">
+          </div>
+        </div>
+        <div class="text-center">
+          <button type="submit" class="btn-admin"><i class="fas fa-save me-2"></i>Добавить товар</button>
+        </div>
+        <div id="formMessage" class="message"></div>
+      </form>
+    </div>
+
+    <div class="admin-card">
+      <h2 class="admin-title"><i class="fas fa-list me-2"></i>Управление товарами</h2>
+      <div class="product-table" id="productsList">
+        <div class="text-center p-4">Загрузка...</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script>
+    const STORAGE_PRODUCTS_KEY = 'store_products';
+    const STORAGE_SESSION_KEY = 'auth_app_current_user';
+
+    function checkAdminAccess() {
+      const sessionRaw = localStorage.getItem(STORAGE_SESSION_KEY);
+      if (!sessionRaw) {
+        window.location.href = 'авторизация.html';
+        return false;
+      }
+      try {
+        const session = JSON.parse(sessionRaw);
+        if (session.role !== 'admin') {
+          window.location.href = 'index.html';
+          return false;
+        }
+        return true;
+      } catch(e) {
+        window.location.href = 'авторизация.html';
+        return false;
+      }
+    }
+
+    function getProducts() {
+      const raw = localStorage.getItem(STORAGE_PRODUCTS_KEY);
+      if (!raw) return [];
+      try {
+        return JSON.parse(raw);
+      } catch(e) {
+        return [];
+      }
+    }
+
+    function saveProducts(products) {
+      localStorage.setItem(STORAGE_PRODUCTS_KEY, JSON.stringify(products));
+    }
+
+    function addProduct(product) {
+      const products = getProducts();
+      const newId = Date.now();
+      const newProduct = {
+        id: newId,
+        name: product.name,
+        price: parseInt(product.price),
+        description: product.description || '',
+        img: product.img || 'img/медея.jpg',
+        category: product.category,
+        material: product.material || '',
+        manufacturer: product.manufacturer || '',
+        country: product.country || '',
+        details: product.details || '',
+        composition: product.composition ? product.composition.split(',').map(s => s.trim()) : []
+      };
+      products.push(newProduct);
+      saveProducts(products);
+      return newProduct;
+    }
+
+    function deleteProduct(productId) {
+      let products = getProducts();
+      products = products.filter(p => p.id !== productId);
+      saveProducts(products);
+      renderProductsList();
+    }
+
+    function renderProductsList() {
+      const products = getProducts();
+      const container = document.getElementById('productsList');
+      if (!container) return;
+      
+      if (products.length === 0) {
+        container.innerHTML = '<div class="text-center p-4">Товаров пока нет</div>';
+        return;
+      }
+      
+      let html = `
+        <table>
+          <thead>
+            <tr><th>ID</th><th>Название</th><th>Цена</th><th>Категория</th><th>Действия</th></tr>
+          </thead>
+          <tbody>
+      `;
+      products.forEach(prod => {
+        html += `
+          <tr>
+            <td>${prod.id}</td>
+            <td>${escapeHtml(prod.name)}</td>
+            <td>${prod.price} ₽</td>
+            <td>${prod.category}</td>
+            <td><button class="delete-product-btn" data-id="${prod.id}"><i class="fas fa-trash"></i> Удалить</button></td>
+          </tr>
+        `;
+      });
+      html += `</tbody></table>`;
+      container.innerHTML = html;
+      
+      document.querySelectorAll('.delete-product-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const id = parseInt(btn.getAttribute('data-id'));
+          if (confirm('Удалить товар?')) {
+            deleteProduct(id);
+          }
+        });
+      });
+    }
+    
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+      });
+    }
+
+    document.getElementById('addProductForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const newProduct = {
+        name: document.getElementById('prodName').value.trim(),
+        price: document.getElementById('prodPrice').value,
+        description: document.getElementById('prodDesc').value.trim(),
+        category: document.getElementById('prodCategory').value,
+        material: document.getElementById('prodMaterial').value.trim(),
+        manufacturer: document.getElementById('prodManufacturer').value.trim(),
+        country: document.getElementById('prodCountry').value.trim(),
+        details: document.getElementById('prodDetails').value.trim(),
+        composition: document.getElementById('prodComposition').value.trim(),
+        img: document.getElementById('prodImg').value.trim() || 'img/медея.jpg'
+      };
+      
+      if (!newProduct.name || !newProduct.price) {
+        showMessage('Заполните название и цену', 'error');
+        return;
+      }
+      
+      addProduct(newProduct);
+      showMessage('Товар успешно добавлен!', 'success');
+      document.getElementById('addProductForm').reset();
+      renderProductsList();
+    });
+    
+    function showMessage(msg, type) {
+      const msgDiv = document.getElementById('formMessage');
+      msgDiv.innerHTML = `<div class="${type}">${msg}</div>`;
+      setTimeout(() => {
+        msgDiv.innerHTML = '';
+      }, 3000);
+    }
+    
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem(STORAGE_SESSION_KEY);
+      window.location.href = 'авторизация.html';
+    });
+    
+    if (checkAdminAccess()) {
+      renderProductsList();
+    }
+  </script>
+</body>
+</html>
