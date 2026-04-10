@@ -155,6 +155,7 @@ footer{
 }
 
 .product-card {
+  margin: 20px;
   border: none;
   border-radius: 30px;
   overflow: hidden;
