@@ -201,7 +201,7 @@ $(document).ready(function () {
     productsToRender.forEach(product => {
       const isFavorite = favorites.includes(product.id.toString());
       const card = `
-        <div class="col-md-3 mb-4">
+        <div class="col-md-3 mb-4 ml-2 mr-2">
           <div class="product-card" data-id="${product.id}">
             <a href="product_card.html?id=${product.id}" class="product-link" style="text-decoration: none; color: inherit;">
               <img class="product-image" src="${product.img}" alt="${product.name}">
