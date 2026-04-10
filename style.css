@@ -584,7 +584,7 @@ label:hover{
 
 .slider-btn {
   position: absolute;
-  top: 50%;
+  top: 90%;
 
   transform: translateY(-50%);
   background-color: #465940;
