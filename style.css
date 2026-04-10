@@ -155,13 +155,12 @@ footer{
 }
 
 .product-card {
-  margin: 20px;
   border: none;
   border-radius: 30px;
   overflow: hidden;
   transition: all 0.3s ease;
   background: #465940;
-  width: 300px;
+  width: 280px;
   height: 550px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.5);
   padding: 10px;
