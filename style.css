@@ -498,6 +498,7 @@ label:hover{
 .slider-container {
   max-width: 1200px;
   width: 100%;
+  justify-content: center;
 }
 
 .slider {
@@ -584,7 +585,6 @@ label:hover{
 
 .slider-btn {
   position: absolute;
-  top: 35%;
 
   transform: translateY(-50%);
   background-color: #465940;
