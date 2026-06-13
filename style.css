@@ -498,7 +498,6 @@ label:hover{
 .slider-container {
   max-width: 1200px;
   width: 100%;
-  justify-content: center;
 }
 
 .slider {
